@@ -96,18 +96,19 @@ public class StarTest {
     public void testOneParameterConstructor() {
         System.out.println("Star.Star(int square) Test");
         Star instance;
+        int result;
         for (int i = 0; i <= 100; i++){
             instance = new Star(i);
-            int result = instance.getBoardPosition();
+            result = instance.getBoardPosition();
             assertEquals("oneparam constructor fail!! expected " + i + "!!", 
                     result, i); 
         }
         instance = new Star(-1);
-        int result = instance.getBoardPosition();
+        result = instance.getBoardPosition();
         assertEquals("negative number constructor fail!! expected 0!!", 
                     result, 0);
         instance = new Star(105);
-        int result = instance.getBoardPosition();
+        result = instance.getBoardPosition();
         assertEquals(">100 number constructor fail!! expected 100!!", 
                     result, 100);
 
