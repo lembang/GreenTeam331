@@ -19,10 +19,23 @@ public class Star {
     private int yPos;
     private static Image starIMG = null;
 
-    public void draw(Graphics g, SnakesAndLadders parent) {
+    /**
+     *
+     * @param g
+     * @param parent
+     *
+     * @throws NullPointerException
+     */
+    public void draw(Graphics g, SnakesAndLadders parent) throws NullPointerException {
+        if (g == null || parent == null)
+            throw new NullPointerException();
         g.drawImage(starIMG,xPos,yPos, parent);  
     }
     
+    /**
+     *
+     * @return the square it should "reside" on
+     */
     public int getBoardPosition(){
         return this.affectsSquare;
     }
@@ -38,6 +51,26 @@ public class Star {
               System.out.printf(e.toString() + "\n");
             }
         }
+    }
+    
+    Star(int squareNum){
+        if (squareNum >= 0 && squareNum <= 100){
+          this.affectsSquare = squareNum;
+        } else if (squareNum < 0) { 
+          this.affectsSquare = 0;
+        } else {
+          this.affectsSquare = 99;
+        }
+        this.calcDrawXY();
+        if (starIMG == null){
+            try {
+              starIMG = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/imgs/star.png"));
+            }
+            catch (Exception e) {
+              System.out.printf(e.toString() + "\n");
+            }
+        }
+        
     }
     
     private void calcDrawXY(){
@@ -59,3 +92,4 @@ public class Star {
         this.yPos = (int)((y + yOffset)*0.75);
     } 
 }
+
