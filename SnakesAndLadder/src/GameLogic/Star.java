@@ -59,7 +59,7 @@ public class Star {
         } else if (squareNum < 0) { 
           this.affectsSquare = 0;
         } else {
-          this.affectsSquare = 99;
+          this.affectsSquare = 100;
         }
         this.calcDrawXY();
         if (starIMG == null){
