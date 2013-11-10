@@ -24,6 +24,9 @@ public class SnakesAndLadders extends Applet
    private int screenWidth;
    private Thread boardThread;
    Board _gameBoard = new Board();
+   private static boolean start = false;
+   
+  private static boolean singePlayerMode;
    
    @Override
    public void keyPressed( KeyEvent e ) { }
@@ -38,6 +41,7 @@ public class SnakesAndLadders extends Applet
          {                 
              _gameBoard.movePlayer();
          }          
+         start = !start;
          repaint();
          e.consume();
          
@@ -60,8 +64,12 @@ public class SnakesAndLadders extends Applet
         Color newColor = Color.decode("0x000000");
         setBackground(newColor);
         addKeyListener( this );
+        
+
+        
         boardThread = new Thread (this);
         boolean ok = true;
+        
         while (ok){ //add max players
             Player _newPlayer = new Player();
             ok = _gameBoard.addPlayer(_newPlayer);
@@ -82,7 +90,7 @@ public class SnakesAndLadders extends Applet
             while (!result){
                 result = _gameBoard.addStar();
             }
-        }     
+        }
     }
    @Override
     public void paint( Graphics g ) {
@@ -139,7 +147,15 @@ public class SnakesAndLadders extends Applet
     public static void main(String[] args) {
         JFrame frame = new JFrame("Snakes and Ladders!");
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setPreferredSize(new Dimension(900,638));        
+	frame.setPreferredSize(new Dimension(900,638));
+        StartMenu _menu = new StartMenu();
+        _menu.setVisible(true);
+        boolean goNext = false;
+        while (goNext == false) { 
+            goNext = _menu.finished;
+            System.out.println(goNext);
+        }
+        singePlayerMode = _menu.isSPMode();
 	SnakesAndLadders game = new SnakesAndLadders() {};
 	frame.getContentPane().add(game);      
         frame.pack();
@@ -149,3 +165,4 @@ public class SnakesAndLadders extends Applet
     }
     
 }
+

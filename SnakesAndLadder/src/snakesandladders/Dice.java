@@ -45,7 +45,7 @@ public class Dice extends JLabel{
     public void paintComponent(Graphics g, SnakesAndLadders parent){
         super.paintComponent(g);
         if(this.roll){
-            ic.paintIcon(parent, g, 600, 0);
+            ic.paintIcon(parent, g, 600, 400);
             
         }  
     }    
@@ -63,3 +63,4 @@ public class Dice extends JLabel{
     }
     
 }
+

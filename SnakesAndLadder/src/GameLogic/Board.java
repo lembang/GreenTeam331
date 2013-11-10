@@ -17,6 +17,7 @@ import snakesandladders.SnakesAndLadders;
  */
 public class Board {
     BoardNode[] boardArray;
+    
     private ArrayList snakeList;
     private ArrayList ladderList;
     private ArrayList playerList;
@@ -27,6 +28,7 @@ public class Board {
     private int currPlayers;
     private int playerTurnNum;
     private static Dice _dice;
+    private ScoreBoard _scoreBoard;
     
     
     
@@ -44,6 +46,7 @@ public class Board {
         playerList = new ArrayList();
         starList = new ArrayList();
         _dice = new Dice();
+        _scoreBoard = new ScoreBoard();
         try {
     	  bgImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/imgs/background.png"));
         }
@@ -59,7 +62,9 @@ public class Board {
     public boolean addPlayer(Player _player){
         if (currPlayers < MAX_PLAYERS){
             playerList.add(_player);
+            _scoreBoard.updatePlayerName( this.currPlayers , _player.getPlayerName() );
             currPlayers++;
+            _scoreBoard.updateCurrPlayers(this.currPlayers);
             return true;
         }
         return false;
@@ -77,7 +82,6 @@ public class Board {
     }
     
     public void drawBG(Graphics g, SnakesAndLadders parent){
-        //implement meee
         g.drawImage(bgImage, 0, 0, parent);
     }
 
@@ -130,10 +134,12 @@ public class Board {
         return true;
     }
 
+    
     public void drawBoard(Graphics g, SnakesAndLadders parent){
         //draw the BG
         this.drawBG(g, parent);
         
+        this._scoreBoard.draw(g, parent);
 
         //draw stars
         for(Iterator iterator = starList.iterator(); iterator.hasNext();) {
@@ -214,6 +220,7 @@ public class Board {
         }
         _currPlayer.setBoardPos(endPos);
         playerTurnNum = ++playerTurnNum % currPlayers;
+        _scoreBoard.updateCurrTurn(playerTurnNum);
         return true;
     }
 
@@ -247,3 +254,4 @@ public class Board {
     }
     
 }
+
