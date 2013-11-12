@@ -12,6 +12,8 @@ import GameLogic.*;
 import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 
@@ -25,8 +27,7 @@ public class SnakesAndLadders extends Applet
    private Thread boardThread;
    Board _gameBoard = new Board();
    private static boolean start = false;
-   
-  private static boolean singePlayerMode;
+   private static boolean singePlayerMode;
    
    @Override
    public void keyPressed( KeyEvent e ) { }
@@ -40,8 +41,7 @@ public class SnakesAndLadders extends Applet
          if (c == ' ') 
          {                 
              _gameBoard.movePlayer();
-         }          
-         start = !start;
+         }
          repaint();
          e.consume();
          
@@ -59,28 +59,31 @@ public class SnakesAndLadders extends Applet
     }
    @Override
     public void init() {
+        StartMenu _menu = new StartMenu();
+        _menu.setVisible(true);
+        while (!_menu.finished) { 
+            System.out.println( "wat");
+        }
+        singePlayerMode = _menu.isSPMode();
+        
         screenWidth = getSize().width;
         screenHeight = getSize().height;
-        Color newColor = Color.decode("0x000000");
-        setBackground(newColor);
+        setBackground(Color.BLACK);
         addKeyListener( this );
         
-
         
-        boardThread = new Thread (this);
         boolean ok = true;
-        
         while (ok){ //add max players
             Player _newPlayer = new Player();
             ok = _gameBoard.addPlayer(_newPlayer);
         }
         
-        for (int i = 0; i < 7; i++){
+        for (int i = 0; i < 15; i++){
             boolean result = _gameBoard.addSnake();
             while (!result)
                 result = _gameBoard.addSnake();
         }
-        for (int i = 0; i < 7; i++){
+        for (int i = 0; i < 15; i++){
             boolean result = _gameBoard.addLadder();
             while (!result)
                 result = _gameBoard.addLadder();
@@ -91,16 +94,18 @@ public class SnakesAndLadders extends Applet
                 result = _gameBoard.addStar();
             }
         }
+        
+        //define a new thread
+        boardThread = new Thread(this);
+        boardThread.start();
     }
    @Override
     public void paint( Graphics g ) {
-
-        //g.drawImage(myBackgroundImage, 0, 0, this);      
-        //dRoll.paintComponent(g, this);
-        //myPiece.paint(g,this);
+        super.paint(g);
         _gameBoard.drawBoard(g,this);
       
     }  
+   
    @Override
     public void update (Graphics g) 
     {
@@ -119,10 +124,11 @@ public class SnakesAndLadders extends Applet
 	    paint (dbg);
 	    g.drawImage (dbImage, 0, 0, this);
     }
+   
    @Override
     public void start ()
     {
-        boardThread.start ();
+        boardThread.start();
     }
 
    @Override
@@ -130,38 +136,28 @@ public class SnakesAndLadders extends Applet
 
     @Override
     public void run() {
-        // lower ThreadPriority
-        Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-
-        // run a long while (true) this means in our case "always"
-        while (true)
-        {
+        while (true){
             // repaint the applet
             repaint();
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(SnakesAndLadders.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
-            // set ThreadPriority to maximum value
-            Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 
-        }     
+        }
     }
+    
     public static void main(String[] args) {
         JFrame frame = new JFrame("Snakes and Ladders!");
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	frame.setPreferredSize(new Dimension(900,638));
-        StartMenu _menu = new StartMenu();
-        _menu.setVisible(true);
-        boolean goNext = false;
-        while (goNext == false) { 
-            goNext = _menu.finished;
-            System.out.println(goNext);
-        }
-        singePlayerMode = _menu.isSPMode();
-	SnakesAndLadders game = new SnakesAndLadders() {};
+	SnakesAndLadders game = new SnakesAndLadders(){};
 	frame.getContentPane().add(game);      
         frame.pack();
         game.centerFrame(frame);
         game.init();
-              	
     }
     
 }

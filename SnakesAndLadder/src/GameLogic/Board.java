@@ -29,8 +29,8 @@ public class Board {
     private int playerTurnNum;
     private static Dice _dice;
     private ScoreBoard _scoreBoard;
-    
-    
+    private Winner _winGFX;
+    private boolean winner = false;
     
     public Board(){
         //constructor
@@ -165,7 +165,13 @@ public class Board {
         
         //draw dice
         _dice.paintComponent(g, parent);
+        
+        if (winner){
+            _winGFX.draw(g, parent);
+        }
+            
     }
+    /*
     public boolean movePlayer(){
         int numMoves = getMovement();
         Player _currPlayer = (Player)this.playerList.get(playerTurnNum);
@@ -185,6 +191,7 @@ public class Board {
         int arrayEndPos = endPos-1;
         if (this.boardArray[arrayEndPos].containsStar){
             _currPlayer.addStar();
+            this.delBoardStar(endPos);
         }
         
         if (this.boardArray[arrayEndPos].containsLadderBottom){
@@ -221,6 +228,97 @@ public class Board {
         _currPlayer.setBoardPos(endPos);
         playerTurnNum = ++playerTurnNum % currPlayers;
         _scoreBoard.updateCurrTurn(playerTurnNum);
+        return true;
+    }*/
+       
+    public void delBoardStar(int square){
+        for(Iterator iterator = starList.iterator(); iterator.hasNext();) {
+            Star _currStar = (Star) iterator.next();
+            if (_currStar.getBoardPosition() == square){
+                this.boardArray[square-1].containsStar = false;
+                iterator.remove();
+            }
+                
+        } 
+        
+    }
+    
+    public boolean movePlayer(){
+        int numMoves = getMovement();
+        Player _currPlayer = (Player)this.playerList.get(playerTurnNum);
+        int firstPos = _currPlayer.getBoardPos();
+        int endPos = firstPos + numMoves;
+        
+        System.out.print("MOVE PLAYER[" + _currPlayer.getPlayerName() 
+                    + "] FROM [" + firstPos + "] TO SQ [" + endPos + "]\n\n");
+        
+        //check for end of game
+        if (endPos >= 100){ 
+                _currPlayer.setBoardPos(100);
+                 this._winGFX = new Winner(_currPlayer.getPlayerName());
+                 this.winner = true;
+                return false; //end of game
+        }
+        
+        //do initial move of player
+        _currPlayer.setBoardPos(endPos);
+        
+        //recursively check for movement modifiers
+        boolean ret = movePlayerModifiers(_currPlayer, endPos);
+        if (ret == false) return false; //immediately check for end of game
+        playerTurnNum = ++playerTurnNum % currPlayers;
+        _scoreBoard.updateCurrTurn(playerTurnNum);
+        return true; 
+    }
+    
+    public boolean movePlayerModifiers(Player _currPlayer, int square){
+    
+
+        if (square >= 100){ 
+                _currPlayer.setBoardPos(100);
+                 this._winGFX = new Winner(_currPlayer.getPlayerName());
+                 this.winner = true;
+                return false; //end of game
+        }
+
+        int arrayEndPos = square-1;
+        if (this.boardArray[arrayEndPos].containsStar){
+             _currPlayer.addStar();
+             this.delBoardStar(square);
+             return movePlayerModifiers(_currPlayer, square);
+        }
+        
+        if (this.boardArray[arrayEndPos].containsLadderBottom){
+        	for(Iterator iterator = ladderList.iterator(); iterator.hasNext();) {
+                Ladder _currLadder = (Ladder) iterator.next();
+                 if (_currLadder.getBottomPos() == square){
+                     square = _currLadder.getTopPos();
+                     _currPlayer.setBoardPos(square);
+                     return movePlayerModifiers(_currPlayer, square);
+                 }
+             }
+        }
+        
+        if (this.boardArray[arrayEndPos].containsSnakeHead){
+            //check if user has a star
+            boolean star = _currPlayer.hasStar();
+            if (star) {
+                System.out.print("STAR USED FOR PLAYER" + _currPlayer.getPlayerName() + "\n\n");
+                _currPlayer.delStar();
+                return true;
+            } else {
+                //find snake and update endPos
+                for(Iterator iterator = snakeList.iterator(); iterator.hasNext();) {
+                   Snake _currSnake = (Snake) iterator.next();
+                    if (_currSnake.getAffectsSquare() == square){
+                        square = _currSnake.getMoveToSquare();
+                        _currPlayer.setBoardPos(square);
+                        return movePlayerModifiers(_currPlayer, square);
+                    }
+                }
+            }
+        }
+        
         return true;
     }
 

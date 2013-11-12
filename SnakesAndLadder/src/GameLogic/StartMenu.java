@@ -75,4 +75,8 @@ public class StartMenu extends JFrame {
     public boolean isSPMode() {
         return this.singlePlayerMode;
     }
+
+    public boolean isFinished() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

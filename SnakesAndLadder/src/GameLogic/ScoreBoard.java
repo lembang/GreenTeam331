@@ -5,6 +5,7 @@
 package GameLogic;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import snakesandladders.SnakesAndLadders;
 
@@ -47,6 +48,8 @@ public class ScoreBoard {
         g.fillRect(startX,startY,width,height);
         g.setColor(Color.BLACK);
         int lastY = 0;
+        Font font = new Font("Arial", Font.PLAIN, 20);
+        g.setFont(font);
         for (int i = 0; i < this.currPlayers; i++){
             g.drawString(playerNames[i], startX + 20 , startY + 20 + (i*40));
             lastY = startY + 20 + (i*40);

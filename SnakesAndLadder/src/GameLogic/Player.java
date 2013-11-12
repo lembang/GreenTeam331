@@ -15,7 +15,7 @@ import snakesandladders.SnakesAndLadders;
 public class Player {
     private String playerName;
     GamePiece _gamePiece; //0 1 2 or 3
-    private int boardPosition; //0 to 99
+    private int boardPosition; //1 to 100
     private int starCount; //0 1 or 2
     private static int numPlayers = 0;
     
@@ -30,12 +30,16 @@ public class Player {
         return this.boardPosition;
     }
     
+    public boolean getAnimating(){
+        return _gamePiece.getAnimating();
+    }
+    
     public String getPlayerName(){
         return this.playerName;
     }
             
-    public void setBoardPos(int pos) {
-        _gamePiece.move(pos);
+    public void setBoardPos(int pos) {        
+        _gamePiece.addMove(pos);
         this.boardPosition = pos;
     }
 
