@@ -145,7 +145,8 @@ public class StartOptionsMenu extends javax.swing.JFrame {
                     gameMode = 1;
                 }
                 if (jRadioButton3.isSelected()) {
-                    gameMode = 2;
+                    JOptionPane.showMessageDialog(null, "Coming soon!");
+                    return;
                 }
                 snakes = Integer.parseInt(label3.getText());
                 ladders = Integer.parseInt(label2.getText());
