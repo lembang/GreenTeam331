@@ -5,8 +5,7 @@
 package GameLogic;
 
 import java.awt.Graphics;
-import snakesandladders.GamePiece;
-import snakesandladders.SnakesAndLadders;
+import SnakesAndLaddersApplet.SnakesAndLadders;
 
 /**
  *

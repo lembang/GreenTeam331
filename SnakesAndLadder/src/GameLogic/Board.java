@@ -8,8 +8,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.*;
-import snakesandladders.Dice;
-import snakesandladders.SnakesAndLadders;
+import SnakesAndLaddersApplet.SnakesAndLadders;
 
 /**
  *
@@ -31,6 +30,9 @@ public class Board {
     private ScoreBoard _scoreBoard;
     private Winner _winGFX;
     private boolean winner = false;
+    private CountingQuestion _countQuestion;
+    boolean educationalMode = false;
+    
     
     public Board(){
         //constructor
@@ -53,6 +55,10 @@ public class Board {
         catch (Exception e) {
      	  System.out.printf(e.toString() + "\n");
         }
+    }
+    
+    public void setEducationalMode(boolean educationalMode) {
+        this.educationalMode = educationalMode;
     }
     
     public int getPlayerTurnNum(){
@@ -104,6 +110,10 @@ public class Board {
         return true;
     }
     
+    public void diceRoll(){
+        _dice.twoDice();
+    }
+    
     public boolean addLadder(){
         Ladder _ladderInstance = new Ladder();
         //check for duplicate
@@ -137,7 +147,7 @@ public class Board {
     
     public void drawBoard(Graphics g, SnakesAndLadders parent){
         //draw the BG
-        this.drawBG(g, parent);
+        this.drawBG(g, parent); 
         
         this._scoreBoard.draw(g, parent);
 
@@ -259,7 +269,6 @@ public class Board {
                  this.winner = true;
                 return false; //end of game
         }
-        
         //do initial move of player
         _currPlayer.setBoardPos(endPos);
         
@@ -328,7 +337,6 @@ public class Board {
     }
     
     private static int getMovement(){
-        _dice.twoDice();
         int diceRoll = _dice.getDiceTotal();
         //check for any global modifications to movement here
         int postMove = diceRoll; //none implemented atm

@@ -5,13 +5,14 @@ import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import snakesandladders.SnakesAndLadders;
+import javax.swing.JPanel;
+import SnakesAndLaddersApplet.SnakesAndLadders;
 
 /**
  *
  * @author Dylan
  */
-public class Winner extends JLabel {
+public class Winner extends JPanel {
     private String winnerName;
     private int startX;
     private int startY;

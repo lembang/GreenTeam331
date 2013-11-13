@@ -7,7 +7,7 @@ package GameLogic;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import snakesandladders.SnakesAndLadders;
+import SnakesAndLaddersApplet.SnakesAndLadders;
 
 /**
  *
@@ -22,6 +22,7 @@ public class ScoreBoard {
     private int width;
     private int height;
     private final static int MAX_PLAYERS = 4;
+    
     
     public void updateCurrPlayers(int num){
         this.currPlayers = num;
