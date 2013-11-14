@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
-
+import RMINetwork.*; 
 /**
  *
  * @author Dylan
@@ -29,6 +29,7 @@ public class StartOptionsMenu extends javax.swing.JFrame {
     private int stars = 0;
     private boolean finished = false;
 
+    
     public int getGameMode() {
         return gameMode;
     }
@@ -89,7 +90,7 @@ public class StartOptionsMenu extends javax.swing.JFrame {
         label2 = new java.awt.Label();
         label3 = new java.awt.Label();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jButton1 = new javax.swing.JButton();
+        javax.swing.JButton jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -146,8 +147,7 @@ public class StartOptionsMenu extends javax.swing.JFrame {
                     gameMode = 1;
                 }
                 if (jRadioButton3.isSelected()) {
-                    JOptionPane.showMessageDialog(null, "Coming soon!");
-                    return;
+                    gameMode = 2;
                 }
                 snakes = Integer.parseInt(label3.getText());
                 ladders = Integer.parseInt(label2.getText());
@@ -261,9 +261,8 @@ public class StartOptionsMenu extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

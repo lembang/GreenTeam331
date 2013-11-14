@@ -208,6 +208,8 @@
       </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jButton1.addActionListener(new ActionListener() {&#xa;            public void actionPerformed(ActionEvent event){&#xa;                if (jRadioButton1.isSelected()) {&#xa;                    gameMode = 0;&#xa;                }&#xa;                if (jRadioButton2.isSelected()) {&#xa;                    gameMode = 1;&#xa;                }&#xa;                if (jRadioButton3.isSelected()) {&#xa;                    gameMode = 2;&#xa;                }&#xa;                snakes = Integer.parseInt(label3.getText());&#xa;                ladders = Integer.parseInt(label2.getText());&#xa;                stars = Integer.parseInt(label1.getText());&#xa;                if (jCheckBox1.isSelected()){&#xa;                    educationalMode = true;&#xa;                }&#xa;                finished = true;&#xa;                setVisible(false);&#xa;            }&#xa;        &#xa;        });"/>
+        <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
       </AuxValues>
     </Component>
   </SubComponents>

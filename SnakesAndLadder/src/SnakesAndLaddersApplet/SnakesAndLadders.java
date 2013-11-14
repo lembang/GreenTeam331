@@ -13,6 +13,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import RMINetwork.*;
 
 
 public class SnakesAndLadders extends JPanel
@@ -32,6 +33,7 @@ public class SnakesAndLadders extends JPanel
    private boolean waiting = false;
    private Thread waitThread;
    private static final boolean fastmode = false; //FOR DEBUGGING PURPOSES
+   private RMIClient rClient;
    
    public SnakesAndLadders(){
        super();
@@ -141,6 +143,16 @@ public class SnakesAndLadders extends JPanel
         boardThread = new Thread(this);
         boardThread.start();
     }
+    
+    /**
+     * Internet Multi player
+     * @author the 
+     */
+    public void intrntMulti(){
+        rClient = new RMIClient();
+        rClient.createConnection(3103);
+    }
+    
    @Override
     public void paint( Graphics g ) {
         super.paint(g);
