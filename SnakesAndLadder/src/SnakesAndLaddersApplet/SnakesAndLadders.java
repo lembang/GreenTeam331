@@ -152,6 +152,20 @@ public class SnakesAndLadders extends JPanel
         rClient = new RMIClient();
         rClient.createConnection(3103);
     }
+    /**
+     * 
+     * Need Dylan Helps
+     */
+    
+    public void generateGameBoard(){
+        //should be the location of snake and ladders & stars
+        
+    }
+    
+    public void SyncState(){
+        //location of pawns, star, star owned
+    }
+    
     
    @Override
     public void paint( Graphics g ) {
