@@ -25,11 +25,13 @@ public class ScoreBoard {
     private final static int MAX_PLAYERS = 4;
     
     public void addStar(int playerNum){
-        this.playerStars[playerNum]++;
+        if (this.playerStars[playerNum] < 2)
+            this.playerStars[playerNum]++;
     }
     
     public void delStar(int playerNum){
-        this.playerStars[playerNum]--;
+        if (this.playerStars[playerNum] > 0)
+            this.playerStars[playerNum]--;
     }
     
     public void updateCurrPlayers(int num){
@@ -62,7 +64,7 @@ public class ScoreBoard {
         Font font = new Font("Arial", Font.PLAIN, 20);
         g.setFont(font);
         for (int i = 0; i < this.currPlayers; i++){
-            g.drawString(playerNames[i], startX + 20 , startY + 20 + (i*40));
+            g.drawString(playerNames[i], startX + 20 , startY + 30 + (i*40));
             lastY = startY + 20 + (i*40);
         }
         lastY += 40;

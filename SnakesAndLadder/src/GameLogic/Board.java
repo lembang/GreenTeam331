@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.*;
 import SnakesAndLaddersApplet.SnakesAndLadders;
+import javax.swing.JFrame;
 
 /**
  *
@@ -31,7 +32,6 @@ public class Board {
     protected ScoreBoard _scoreBoard;
     protected Winner _winGFX;
     protected boolean winner = false;
-    protected CountingQuestion _countQuestion;
     protected boolean educationalMode = false;
     
    
@@ -205,23 +205,28 @@ public class Board {
         int firstPos = _currPlayer.getBoardPos();
         int endPos = firstPos + numMoves;
         
-        if (educationalMode){
-            _countQuestion = new CountingQuestion(firstPos, numMoves);
-            _countQuestion.setVisible(true);
-            while (!_countQuestion.isFinished()) {  
-                //wait until the question is finished
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException ex) {
-                    //do nothing
-                }
+        if (educationalMode && endPos <= 100){
+            Question _question;
+            if ((Math.random() * 2) >= 1){
+                _question = new CountingQuestion(firstPos, numMoves);
+            } else {
+                _question = new AddingQuestion(_dice.getDice1(), _dice.getDice2());
             }
-            if (!_countQuestion.isCorrect()){
-                _countQuestion = null;
+            while (!_question.isFinished()) {  
+                    //wait until the question is finished
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        //do nothing
+                    }
+            }
+            if (!_question.isCorrect()){
+                playerTurnNum = ++playerTurnNum % currPlayers;
+                _scoreBoard.updateCurrTurn(playerTurnNum);
                 return true;
             }
-            _countQuestion = null;
         }
+        
         
         System.out.print("MOVE PLAYER[" + _currPlayer.getPlayerName() 
                     + "] FROM [" + firstPos + "] TO SQ [" + endPos + "]\n\n");
@@ -262,6 +267,7 @@ public class Board {
         int arrayEndPos = square-1;
         if (this.getBoardArray()[arrayEndPos].containsStar){
              _currPlayer.addStar();
+             _scoreBoard.addStar(playerTurnNum);
              this.delBoardStar(square);
              return movePlayerModifiers(_currPlayer, square);
         }
@@ -283,6 +289,7 @@ public class Board {
             if (star) {
                 System.out.print("STAR USED FOR PLAYER" + _currPlayer.getPlayerName() + "\n\n");
                 _currPlayer.delStar();
+                _scoreBoard.delStar(playerTurnNum);
                 return true;
             } else {
                 //find snake and update endPos

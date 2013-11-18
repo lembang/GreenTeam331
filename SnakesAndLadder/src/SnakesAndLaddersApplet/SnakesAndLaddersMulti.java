@@ -5,7 +5,7 @@
 package SnakesAndLaddersApplet;
 /**
  *
- * @author the, dylan
+ * @author the
  */
 
 import GameLogic.BoardMulti;
@@ -19,7 +19,6 @@ public class SnakesAndLaddersMulti extends SnakesAndLadders {
    private static final boolean fastmode = false; //FOR DEBUGGING PURPOSES
    
    public SnakesAndLaddersMulti(){
-       super();
        this.gameMode = 0;
        this.snakes = 10;
        this.ladders = 10;
@@ -27,7 +26,6 @@ public class SnakesAndLaddersMulti extends SnakesAndLadders {
    }
    
    public SnakesAndLaddersMulti(int gameMode, boolean educationalMode, int snakes, int ladders, int stars){
-        super();
         this.gameMode = gameMode;
         this.snakes = snakes;
         this.ladders = ladders;
@@ -42,6 +40,7 @@ public class SnakesAndLaddersMulti extends SnakesAndLadders {
         this.screenHeight = getSize().height;
         setBackground(Color.BLACK);
         addKeyListener( this );
+        addMouseListener( this );
         
         _gameBoard = new BoardMulti();
         

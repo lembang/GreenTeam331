@@ -1,4 +1,8 @@
 package SnakesAndLaddersApplet;
+/**
+ *
+ * @author dylan
+ */
 
 import java.awt.Dimension;
 import javax.swing.JApplet;

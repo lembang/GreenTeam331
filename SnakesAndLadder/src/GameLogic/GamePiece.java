@@ -27,11 +27,9 @@ public class GamePiece {
     Vector<Integer> goSquares;
     private int color; //red=1,blue=2,green=3,yellow=4,
     private Image pieceImage;
-    private Boolean direction;
     private int square;
     private int baseXPos;
     private boolean animating;
-    private static final int ANIM_FRAMES = 20;
     
     public int getMovePathSize(){
         return goSquares.size();
@@ -48,7 +46,6 @@ public class GamePiece {
         this.dy = 0;
         this.color = plNum;
         this.getImage(color);
-        this.direction = true;
         this.square = 1;
         this.xPos += 4*plNum;
         this.baseXPos = 0 + 4*plNum;
@@ -102,10 +99,16 @@ public class GamePiece {
         this.yPos = calcYPos(this.square);
         this.goXPos = calcXPos(square);
         this.goYPos = calcYPos(square);
+        int numSquares = square - this.square;
         this.square = square;
-        
-        this.dx = (this.goXPos - this.xPos) / ANIM_FRAMES;
-        this.dy = (this.goYPos - this.yPos) / ANIM_FRAMES;
+        int speedModifier;
+        if (numSquares > 0 && numSquares <= 10){
+            speedModifier = numSquares * 5;
+        } else { 
+            speedModifier = 20;     
+        }
+        this.dx = (this.goXPos - this.xPos) / speedModifier;
+        this.dy = (this.goYPos - this.yPos) / speedModifier;
         animating = true;
     }   
     public void paint(Graphics g, SnakesAndLadders parent)

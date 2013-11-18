@@ -38,7 +38,7 @@ public class Dice extends JLabel{
        this.dice1 = (int )(Math.random() * 6 + 1);
        this.dice2 = (int )(Math.random() * 6 + 1); 
        this.ic = new ImageIcon(this.getClass().getResource
-               ("/resources/imgs/dice/"+dice1+"_"+dice2+".gif"));   
+               ("/resources/imgs/dice/"+getDice1()+"_"+getDice2()+".gif"));   
        this. ic.getImage().flush();      
        this.roll = true;
      
@@ -49,7 +49,9 @@ public class Dice extends JLabel{
             ic.paintIcon(parent, g, 600, 400);
             
         }  
-    }    
+    }
+    
+    
     public void resetRoll(){
         this.roll = false;
     }
@@ -60,7 +62,21 @@ public class Dice extends JLabel{
         return this.roll;
     }
     public int getDiceTotal(){
-        return this.dice1 + this.dice2;
+        return this.getDice1() + this.getDice2();
+    }
+
+    /**
+     * @return the dice1
+     */
+    public int getDice1() {
+        return dice1;
+    }
+
+    /**
+     * @return the dice2
+     */
+    public int getDice2() {
+        return dice2;
     }
     
 }

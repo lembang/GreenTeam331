@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 
 public class SnakesAndLadders extends JPanel
-   implements Runnable, KeyListener {
+   implements Runnable, KeyListener, MouseListener {
      
    private Graphics dbg;
    private Image dbImage;
@@ -107,6 +107,7 @@ public class SnakesAndLadders extends JPanel
         screenHeight = getSize().height;
         setBackground(Color.BLACK);
         addKeyListener( this );
+        addMouseListener( this );
         
         _gameBoard.setEducationalMode(this.educationalMode);
         
@@ -187,5 +188,42 @@ public class SnakesAndLadders extends JPanel
 
         }
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+    @Override
+    public void mousePressed(MouseEvent e) {
+                if (!waiting){
+                waiting = true;
+                _gameBoard.diceRoll();
+                if (!fastmode){ //FOR DEBUGGING PURPOSES
+                this.waitThread = new Thread() {
+                        @Override
+                        public void run() {
+                           try {
+                              Thread.sleep(1500);
+                              _gameBoard.movePlayer();
+                              waiting = false;
+                           } catch(Exception v) {
+            
+                           }
+                        }  
+                };
+                waitThread.start();
+                } else { //FOR DEBUGGING PURPOSES
+                    waiting = false;
+                    _gameBoard.movePlayer();
+                }//FOR DEBUGGING PURPOSES
+             }
+             repaint();
+             e.consume();
+    }
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+    @Override
+    public void mouseExited(MouseEvent e) {}
 }
 
