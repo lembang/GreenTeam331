@@ -22,7 +22,7 @@ public class RMIClient {
      * Variables to be used as a global variable
      */
     private String strRMIAddress, strIPAddress;
-    private String strServiceName = "/SnakeService";
+    private final String strServiceName = "/SnakeService";
     private RemoteInterface riface;
     public RMIClient(){} //empty constructor
     
@@ -47,7 +47,8 @@ public class RMIClient {
     }
 
     /**
-     * @param setRMIAddress the setRMIAddress to set
+     * 
+     * @param strRMIAddress
      */
     public void setStrRMIAddress(String strRMIAddress) {
         this.strRMIAddress = strRMIAddress;

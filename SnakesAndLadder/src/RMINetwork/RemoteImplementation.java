@@ -15,7 +15,14 @@ import java.rmi.RemoteException;
  * @author the
  */
 public class RemoteImplementation extends UnicastRemoteObject implements RemoteInterface {
-    private final RMIServer rServer = new RMIServer();
+    private final RMIServerUI rServer = new RMIServerUI();
     public RemoteImplementation()throws RemoteException{}
-    
+    public void connect(String username) throws RemoteException
+    {
+        rServer.connect(username);
+    }
+    public void disconnect(String username) throws RemoteException
+    {
+        rServer.disconnect(username);
+    }
 }
