@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 package SnakesAndLaddersApplet;
+
 /**
  *
  * @author the
@@ -14,7 +15,7 @@ import RMINetwork.*;
 import java.awt.Color;
 
 
-public class SnakesAndLaddersMulti extends SnakesAndLadders {
+public class SnakesAndLaddersMulti extends SnakesAndLadders implements Runnable {
    private RMIClient rClient;
    private static final boolean fastmode = false; //FOR DEBUGGING PURPOSES
    

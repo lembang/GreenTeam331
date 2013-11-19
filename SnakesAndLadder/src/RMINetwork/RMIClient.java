@@ -39,6 +39,10 @@ public class RMIClient {
         System.out.println("Client Connected");
     }
 
+    public void initialState(){
+    
+    }
+    
     /**
      * @return the setRMIAddress
      */

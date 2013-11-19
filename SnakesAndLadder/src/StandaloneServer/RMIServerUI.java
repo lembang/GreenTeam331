@@ -8,6 +8,7 @@ package StandaloneServer;
 
 import RMINetwork.RemoteImplementation;
 import RMINetwork.RemoteInterface;
+import GameLogic.BoardMulti;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -35,6 +36,7 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
     /**
      * Variables Here
      */
+    BoardMulti bMulti = new BoardMulti();
     Registry reg;
     private static HashMap<String, Socket> connectedUser = new HashMap<String, Socket>();	
     private static Socket ClientSocket = null;
@@ -103,6 +105,7 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
         thread.start();
     }//GEN-LAST:event_btnStartActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
@@ -243,6 +246,10 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
     private javax.swing.JButton btnStart;
     // End of variables declaration//GEN-END:variables
 
+    
+    public void initialState()throws RemoteException{
+        
+    }
     
      public void connect(String username)
     {

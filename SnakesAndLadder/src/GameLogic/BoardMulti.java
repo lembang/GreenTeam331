@@ -16,10 +16,12 @@ import SnakesAndLaddersApplet.SnakesAndLadders;
  * 
  */
 public class BoardMulti extends Board {
+    
     private ArrayList initSnakeList;
     private ArrayList initLadderList;
     private ArrayList initPlayerList;
     private ArrayList initStarList;
+    
     private BoardNode[] initBoardArray;
     
     public BoardMulti(){
