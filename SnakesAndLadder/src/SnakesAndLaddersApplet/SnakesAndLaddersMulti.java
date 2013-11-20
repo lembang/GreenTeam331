@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 public class SnakesAndLaddersMulti extends SnakesAndLadders implements Runnable {
    private RMIClient rClient;
    private static final boolean fastmode = false; //FOR DEBUGGING PURPOSES
+   private int plyrnumb;
    
    public SnakesAndLaddersMulti(){
        this.gameMode = 0;
@@ -92,7 +93,8 @@ public class SnakesAndLaddersMulti extends SnakesAndLadders implements Runnable 
     public void intrntMulti() throws RemoteException{
         rClient = new RMIClient();
         rClient.createConnection(3103);
-        System.err.println(String.valueOf(rClient.getNumber()));
+        plyrnumb = rClient.getNumber();
+        System.err.println(String.valueOf(plyrnumb));
     }
     /**
      * 

@@ -46,6 +46,7 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
     
     //player #
     private int intZZ = 0;
+    private int plyrMovement[]={'0','0','0','0'};
     
     private static HashMap<String, Socket> connectedUser = new HashMap<String, Socket>();	
     private static Socket ClientSocket = null;
@@ -184,36 +185,40 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
         
     }
     public int getPlayerNumber() throws RemoteException{
-        intZZ++;
+        if (intZZ == 5){
+            intZZ = 0;
+        }else {
+            intZZ++;
+        }
         return intZZ;
     }
     
     private void processConnection(int port){
-            try
-            {
-                serverSocket = new ServerSocket(port);
-                System.out.println("Server is running on port " + port + " .... ");
-            }
-            catch (IOException ex)
-            {
-                JOptionPane.showMessageDialog(null, "Could not listen port " + port, "ERROR", JOptionPane.ERROR_MESSAGE);
-                System.exit(-1);
-            }
+        try
+        {
+            serverSocket = new ServerSocket(port);
+            System.out.println("Server is running on port " + port + " .... ");
+        }
+        catch (IOException ex)
+        {
+            JOptionPane.showMessageDialog(null, "Could not listen port " + port, "ERROR", JOptionPane.ERROR_MESSAGE);
+            System.exit(-1);
+        }
 
-            try
+        try
+        {
+            while (x)
             {
-                while (x)
-                {
-                    addClient(serverSocket.accept());
-                    String username = getUsername();
-                    sendPublicMessage(PUBLICMESSAGE, "SERVER", "[" + username + "] is now online");
-                }
+                addClient(serverSocket.accept());
+                String username = getUsername();
+                sendPublicMessage(PUBLICMESSAGE, "SERVER", "[" + username + "] is now online");
             }
-            catch (IOException ex)
-            {
-                    JOptionPane.showMessageDialog(null, "Could not accept connection.", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    //System.exit(-1);
-            }
+        }
+        catch (IOException ex)
+        {
+                JOptionPane.showMessageDialog(null, "Could not accept connection.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //System.exit(-1);
+        }
     }
     public ArrayList getClientList(){
         ArrayList myUser = new ArrayList();
@@ -230,14 +235,12 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
         return myUser;
     }
     
-    public void addClient(Socket clientSocket) throws RemoteException
-    {
+    public void addClient(Socket clientSocket) throws RemoteException{
         connectedUser.put(getUsername(), clientSocket);
         sendPublicMessage(ONLINE, getUsername(),"");
     }
 
-    public void sendPublicMessage(String keyword, String username, String message) throws RemoteException
-    {
+    public void sendPublicMessage(String keyword, String username, String message) throws RemoteException{
         Iterator i = connectedUser.keySet().iterator();
         String user = null;
         while(i.hasNext())
@@ -258,8 +261,7 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
         }
     }
 
-    public void disconnect(String username) throws RemoteException
-    {
+    public void disconnect(String username) throws RemoteException{
             connectedUser.remove(username);
             sendPublicMessage(OFFLINE, username, username + " has been left the conversation");
             sendPublicMessage(PUBLICMESSAGE, "SERVER", username + " has been left the conversation");
@@ -278,13 +280,11 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
         
     }
     
-     public void connect(String username)
-    {
+    public void connect(String username){
             RMIServerUI.username = username;
     }
 
-    public String getUsername()
-    {
+    public String getUsername(){
             return username;
     }
 

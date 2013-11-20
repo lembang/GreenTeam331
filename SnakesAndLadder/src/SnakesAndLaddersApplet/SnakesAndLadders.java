@@ -194,30 +194,30 @@ public class SnakesAndLadders extends JPanel
     }
     @Override
     public void mousePressed(MouseEvent e) {
-                if (!waiting){
-                waiting = true;
-                _gameBoard.diceRoll();
-                if (!fastmode){ //FOR DEBUGGING PURPOSES
-                this.waitThread = new Thread() {
-                        @Override
-                        public void run() {
-                           try {
-                              Thread.sleep(1500);
-                              _gameBoard.movePlayer();
-                              waiting = false;
-                           } catch(Exception v) {
-            
-                           }
-                        }  
-                };
-                waitThread.start();
-                } else { //FOR DEBUGGING PURPOSES
-                    waiting = false;
-                    _gameBoard.movePlayer();
-                }//FOR DEBUGGING PURPOSES
-             }
-             repaint();
-             e.consume();
+            if (!waiting){
+            waiting = true;
+            _gameBoard.diceRoll();
+            if (!fastmode){ //FOR DEBUGGING PURPOSES
+            this.waitThread = new Thread() {
+                    @Override
+                    public void run() {
+                       try {
+                          Thread.sleep(1500);
+                          _gameBoard.movePlayer();
+                          waiting = false;
+                       } catch(Exception v) {
+
+                       }
+                    }  
+            };
+            waitThread.start();
+            } else { //FOR DEBUGGING PURPOSES
+                waiting = false;
+                _gameBoard.movePlayer();
+            }//FOR DEBUGGING PURPOSES
+         }
+         repaint();
+         e.consume();
     }
     @Override
     public void mouseReleased(MouseEvent e) {}
