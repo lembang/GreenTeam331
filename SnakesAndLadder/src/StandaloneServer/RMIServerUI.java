@@ -22,6 +22,8 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,6 +40,13 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
      */
     BoardMulti bMulti = new BoardMulti();
     Registry reg;
+    
+    //boolean for interup thread
+    private boolean x= true;
+    
+    //player #
+    private int intZZ = 0;
+    
     private static HashMap<String, Socket> connectedUser = new HashMap<String, Socket>();	
     private static Socket ClientSocket = null;
     private static ServerSocket serverSocket;
@@ -93,16 +102,24 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
-        // TODO add your handling code here:
-        initializeConnection("127.0.0.1", 3103);
-        //processConnection(3183);
-        thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-               processConnection(3183);           
-            }
-        });
-        thread.start();
+        
+        if(btnStart.getText().equals("Start")){
+            initializeConnection("127.0.0.1", 3103);
+            //processConnection(3183);
+            x=true;
+            thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                processConnection(3183);           
+                }
+            });
+            thread.start();
+            btnStart.setText("Disconnect");
+        }else{
+            deinitializeConnection();
+            x = false;
+            btnStart.setText("Start");
+        }
     }//GEN-LAST:event_btnStartActionPerformed
 
     
@@ -144,7 +161,8 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
     
     public void initializeConnection(String ipAddress, int port){
         try{
-            ipAddress = "rmi://"+ipAddress+"/SnakeLadder:"+port;
+            ipAddress = "rmi://"+ipAddress+":"+port+"/SnakeLadder";
+            System.err.println("ipaddress");
             reg = LocateRegistry.createRegistry(port);
             RemoteInterface riface = new RemoteImplementation();
             reg.rebind(ipAddress, riface);   
@@ -153,15 +171,21 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
             JOptionPane.showMessageDialog(null,"Server Error :" + ex);
             System.exit(0);
         }
-    }
-    
+    }   
     public void deinitializeConnection(){
         try {
             UnicastRemoteObject.unexportObject(reg, true);
+            serverSocket.close();
         } catch (NoSuchObjectException ex) {
             JOptionPane.showMessageDialog(null,"Shutdown Service fail :" + ex);
+        } catch (IOException ex) {
+            Logger.getLogger(RMIServerUI.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+    }
+    public int getPlayerNumber() throws RemoteException{
+        intZZ++;
+        return intZZ;
     }
     
     private void processConnection(int port){
@@ -178,7 +202,7 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
 
             try
             {
-                while (true)
+                while (x)
                 {
                     addClient(serverSocket.accept());
                     String username = getUsername();
@@ -188,11 +212,10 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
             catch (IOException ex)
             {
                     JOptionPane.showMessageDialog(null, "Could not accept connection.", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    System.exit(-1);
+                    //System.exit(-1);
             }
     }
-    public ArrayList getClientList()
-    {
+    public ArrayList getClientList(){
         ArrayList myUser = new ArrayList();
 
         Iterator i = connectedUser.keySet().iterator();
@@ -242,6 +265,10 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
             sendPublicMessage(PUBLICMESSAGE, "SERVER", username + " has been left the conversation");
 	}
 
+    public ArrayList GetAllInitializeData() throws RemoteException{
+        return null;
+    
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStart;
     // End of variables declaration//GEN-END:variables

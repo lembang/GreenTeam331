@@ -14,6 +14,7 @@ import java.rmi.RemoteException;
  * @author the
  */
 public interface RemoteInterface extends Remote {
+    public int getPlayerNumber() throws RemoteException;
     public void connect(String username) throws RemoteException;
     public void disconnect(String username) throws RemoteException;
 }

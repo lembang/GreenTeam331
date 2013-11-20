@@ -16,7 +16,9 @@ import java.rmi.RemoteException;
  */
 public class RemoteImplementation extends UnicastRemoteObject implements RemoteInterface {
     private final RMIServerUI rServer = new RMIServerUI();
-    public RemoteImplementation()throws RemoteException{}
+    
+    public RemoteImplementation()throws RemoteException{}//empty constructor
+    
     public void connect(String username) throws RemoteException
     {
         rServer.connect(username);
@@ -24,5 +26,10 @@ public class RemoteImplementation extends UnicastRemoteObject implements RemoteI
     public void disconnect(String username) throws RemoteException
     {
         rServer.disconnect(username);
+    }
+
+    @Override
+    public int getPlayerNumber() throws RemoteException {
+        return rServer.getPlayerNumber();
     }
 }

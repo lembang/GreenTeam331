@@ -22,11 +22,13 @@ public class RMIClient {
      * Variables to be used as a global variable
      */
     private String strRMIAddress, strIPAddress;
-    private final String strServiceName = "/SnakeService";
+    private int playnumb;
+    private final String strServiceName = "/SnakeLadder";
     private RemoteInterface riface;
     public RMIClient(){} //empty constructor
     
     public void createConnection(int port){
+        setStrIPAddress("127.0.0.1");
         setStrRMIAddress("rmi://"+getStrIPAddress()+":"+port+strServiceName);
         try{    
             Registry Reg = LocateRegistry.getRegistry(port);
@@ -37,6 +39,11 @@ public class RMIClient {
             System.exit(0);
         }
         System.out.println("Client Connected");
+    }
+    
+    public int getNumber()throws RemoteException{
+        playnumb = riface.getPlayerNumber();
+        return playnumb;
     }
 
     public void initialState(){
