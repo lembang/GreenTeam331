@@ -10,6 +10,8 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -44,6 +46,14 @@ public class RMIClient {
     public int getNumber()throws RemoteException{
         playnumb = riface.getPlayerNumber();
         return playnumb;
+    }
+    
+    public void connect(String username){
+        try {
+            riface.connect(username);
+        } catch (RemoteException ex) {
+            JOptionPane.showMessageDialog(null,"Username Error :" + ex);
+        }
     }
 
     public void initialState(){

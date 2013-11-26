@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 public class SnakesAndLaddersMulti extends SnakesAndLadders implements Runnable {
@@ -81,7 +82,8 @@ public class SnakesAndLaddersMulti extends SnakesAndLadders implements Runnable 
        try {
            intrntMulti();
        } catch (RemoteException ex) {
-           Logger.getLogger(SnakesAndLaddersMulti.class.getName()).log(Level.SEVERE, null, ex);
+           JOptionPane.showMessageDialog(null,"Connection Error :" + ex);
+            System.exit(0);
        }
     }
    
@@ -94,7 +96,8 @@ public class SnakesAndLaddersMulti extends SnakesAndLadders implements Runnable 
         rClient = new RMIClient();
         rClient.createConnection(3103);
         plyrnumb = rClient.getNumber();
-        System.err.println(String.valueOf(plyrnumb));
+        rClient.connect(String.valueOf(plyrnumb));
+        //System.err.println(String.valueOf(plyrnumb));
     }
     /**
      * 
