@@ -171,10 +171,12 @@ public class CountingQuestion extends javax.swing.JFrame implements Question {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
+    
+    //CSCI331 DS OVERRIDING
     /**
      * @return the correct
      */
+    @Override
     public boolean isCorrect() {
         return this.correct;
     }
@@ -182,6 +184,7 @@ public class CountingQuestion extends javax.swing.JFrame implements Question {
     /**
      * @return the finished
      */
+    @Override
     public boolean isFinished() {
         return this.finished;
     }

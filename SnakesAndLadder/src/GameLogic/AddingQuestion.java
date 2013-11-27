@@ -177,6 +177,7 @@ public class AddingQuestion extends javax.swing.JFrame implements Question {
     /**
      * @return the correct
      */
+    @Override
     public boolean isCorrect() {
         return this.correct;
     }

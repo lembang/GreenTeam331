@@ -1,7 +1,7 @@
 package SnakesAndLaddersApplet;
 /**
  *
- * @author dylan
+ *
  */
 
 import java.awt.Dimension;
@@ -28,27 +28,21 @@ public class GameApplet extends JApplet {
         int stars = _menu.getStars();
         boolean educationalMode = _menu.isEducationalMode();
         
+        
+        //load the game
+        JFrame frame = new JFrame("Snakes and Ladders!");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setPreferredSize(new Dimension(900,638));
+        SnakesAndLadders game;
         if (gameMode == 2){
-            //load the multiplayer game
-            JFrame frame = new JFrame("Snakes and Ladders!");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setPreferredSize(new Dimension(900,638));
-            SnakesAndLaddersMulti game = new SnakesAndLaddersMulti(gameMode, educationalMode, snakes, ladders, stars);
-            frame.getContentPane().add(game);      
-            frame.pack();
-            game.centerFrame(frame);
-            game.init();
+            game = new SnakesAndLaddersMulti(gameMode, educationalMode, snakes, ladders, stars);
         } else {
-            //load the local game
-            JFrame frame = new JFrame("Snakes and Ladders!");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setPreferredSize(new Dimension(900,638));
-            SnakesAndLadders game = new SnakesAndLadders(gameMode, educationalMode, snakes, ladders, stars);
-            frame.getContentPane().add(game);      
-            frame.pack();
-            game.centerFrame(frame);
-            game.init();
+            game = new SnakesAndLadders(gameMode, educationalMode, snakes, ladders, stars);
         }
+        frame.getContentPane().add(game);      
+        frame.pack();
+        game.centerFrame(frame);
+        game.init();
         
     }
 }

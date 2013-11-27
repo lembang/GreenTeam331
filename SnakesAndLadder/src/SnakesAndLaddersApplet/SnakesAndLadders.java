@@ -5,7 +5,23 @@
 package SnakesAndLaddersApplet;
 /**
  *
- * @author kenyonheffner & dylan
+ * @author dylan and kenyon
+ */
+
+ /* CSCI331 DS SUPERCLASS
+ *  SnakesAndLadders is a class that stands on its own but it is also
+ *  a superclass for the SnakesAndLaddersMulti class. 
+ *  > I abstracted out the ideas that went into the superclass because the 
+ * superclass and subclass are each going to be.
+ *  > The subclass adds the ability to override code in the superclass so 
+ *  that different code will be ran when an instance of the subtype is 
+ *  created rather than an instance of this type.
+ *  > There are no other siblings or subclasses for this superclass, but a 
+ *  possible other subclass would be to seperate local singleplayer mode and 
+ *  local multiplayer mode by creating a local multiplayer class using the same 
+ *  overriding system rather than control statements. The reason why we just 
+ *  used control statements is because the amount of change is very small 
+ *  between the two modes.
  */
 
 import GameLogic.*;
@@ -62,26 +78,7 @@ public class SnakesAndLadders extends JPanel
          if (c == ' ') 
          {                 
              if (!waiting){
-                waiting = true;
-                _gameBoard.diceRoll();
-                if (!fastmode){ //FOR DEBUGGING PURPOSES
-                this.waitThread = new Thread() {
-                        @Override
-                        public void run() {
-                           try {
-                              Thread.sleep(1500);
-                              _gameBoard.movePlayer();
-                              waiting = false;
-                           } catch(Exception v) {
-            
-                           }
-                        }  
-                };
-                waitThread.start();
-                } else { //FOR DEBUGGING PURPOSES
-                    waiting = false;
-                    _gameBoard.movePlayer();
-                }//FOR DEBUGGING PURPOSES
+                this.movePlayer();
              }
          }
          repaint();
@@ -90,6 +87,38 @@ public class SnakesAndLadders extends JPanel
       }   
    }
 
+   public void movePlayer(){
+	   waiting = true;
+       _gameBoard.diceRoll();
+       if (!fastmode){ //FOR DEBUGGING PURPOSES
+       this.waitThread = new Thread() {
+               /* CSCI331 DS OVERRIDING
+                * Here is an example of method overriding.
+                * We are overriding the run method for the class Thread
+                * for our new instance. This lets us specify our own code
+                * for the thread to run when our thread calls the run method 
+                * during its default operation.
+                */
+               @Override
+               public void run() {
+                  try {
+                     Thread.sleep(1500);
+                     _gameBoard.movePlayer();
+                      if (gameMode == 0){
+                   	      _gameBoard.AIMove();
+                      }
+                     waiting = false;
+                  } catch(Exception v) {
+   
+                  }
+               }  
+       };
+       waitThread.start();
+       } else { //FOR DEBUGGING PURPOSES
+           waiting = false;
+           _gameBoard.movePlayer();
+       }//FOR DEBUGGING PURPOSES
+   }
    public void centerFrame (JFrame frame)
     {
         
@@ -194,27 +223,8 @@ public class SnakesAndLadders extends JPanel
     }
     @Override
     public void mousePressed(MouseEvent e) {
-                if (!waiting){
-                waiting = true;
-                _gameBoard.diceRoll();
-                if (!fastmode){ //FOR DEBUGGING PURPOSES
-                this.waitThread = new Thread() {
-                        @Override
-                        public void run() {
-                           try {
-                              Thread.sleep(1500);
-                              _gameBoard.movePlayer();
-                              waiting = false;
-                           } catch(Exception v) {
-            
-                           }
-                        }  
-                };
-                waitThread.start();
-                } else { //FOR DEBUGGING PURPOSES
-                    waiting = false;
-                    _gameBoard.movePlayer();
-                }//FOR DEBUGGING PURPOSES
+             if (!waiting){
+                this.movePlayer();
              }
              repaint();
              e.consume();

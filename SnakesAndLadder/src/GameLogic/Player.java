@@ -13,10 +13,21 @@ import SnakesAndLaddersApplet.SnakesAndLadders;
  */
 public class Player {
     private String playerName;
-    GamePiece _gamePiece; //0 1 2 or 3
+    private GamePiece _gamePiece; //0 1 2 or 3
     private int boardPosition; //1 to 100
     private int starCount; //0 1 or 2
     private static int numPlayers = 0;
+    
+    /* CSCI331 DS ENCAPSULATION
+     * The variable boardPosition is an example of a private variable with a 
+     * getter and a setter. The reason why it would be bad to allow direct
+     * access to a variable is because someone could change that variable to
+     * something that would break the contract of that variable which could
+     * cause a part of code to break. Direct access to this particular 
+     * variable isn't allowed is because it should always be within the range
+     * of 0 to 100 since that is the range of the board and the setter makes 
+     * sure that that contract is always upheld.
+     */
     
     public Player(){
         this.numPlayers++;
@@ -41,9 +52,11 @@ public class Player {
         return _gamePiece.getMovePathSize();
     }
             
-    public void setBoardPos(int pos) {        
-        _gamePiece.addMove(pos);
-        this.boardPosition = pos;
+    public void setBoardPos(int pos) {
+        if (pos <= 100 && pos >= 0){
+            _gamePiece.addMove(pos);
+            this.boardPosition = pos;
+        }
     }
 
     public void draw(Graphics g, SnakesAndLadders parent) {

@@ -17,6 +17,12 @@ import SnakesAndLaddersApplet.SnakesAndLadders;
  *
  * @author Dylan
  */
+
+/* CSCI331 DS JUNIT
+ * Here is a JUNIT test I wrote for the Star class
+ */
+
+
 public class StarTest {
     
     public StarTest() {

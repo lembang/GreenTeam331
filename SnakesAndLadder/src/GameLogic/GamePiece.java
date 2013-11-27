@@ -93,6 +93,23 @@ public class GamePiece {
     public void addMove(int square){
         goSquares.add(square);
     }
+    //CSCI331 LAB5
+    /* Here is the point in our code where we have implemented animation. The 
+     * way it works is by utilizing a FIFO queue of board squares numbers that
+     * the game piece should animate towards in succession. The reason we have
+     * implemented it this way is because when you travel through the squares
+     * that are divisable by 10 and the ones directly after it, you are going 
+     * around a corner on the board so there is three places you travel to. After
+     * that there is the possibility of landing on a snake or a ladder so there
+     * is even more possible places a game piece might need to travel in one move
+     * every time the game piece is drawn, an update function is called that 
+     * either continues animating the game piece to where it should be going, 
+     * pulls a square off the fifo queue if it isn't empty and begins animating
+     * the game piece towards that square, or stops the animation of the game 
+     * piece if there is no more squares to animate to. This provides a smooth
+     * animation style that is scalable and makes sense within the context of 
+     * this particular board game.
+     */
     
     public void move(int square){
         this.xPos = calcXPos(this.square);

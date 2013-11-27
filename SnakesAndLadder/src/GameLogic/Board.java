@@ -9,26 +9,50 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.*;
 import SnakesAndLaddersApplet.SnakesAndLadders;
-import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Dylan
- * edited by Divyata
+ * 
+ */
+
+/* CSCI331 DS PATTERN
+ * Pattern Name: Creator
+ * 
+ * Problem Solved: What object creates the objects that represent the 
+ * variable features on the board that are generated during/for each game? 
+ * Eg. Snakes, Ladders, Stars, Questions, etc.
+ * 
+ * Solution: Have a game board object generate and store these features.
+ * 
+ * Why this pattern fits this part of your code: This board object aggregates
+ * a collection of board features in order to draw them. All the variable 
+ * features of a board are contained within the board itself. This fulfills 
+ * two of the GRASP requirements for an object to be well-suited to act as
+ * a creator for another object.
  */
 public class Board {
     private BoardNode[] boardArray;
-    
     private ArrayList snakeList;
     private ArrayList ladderList;
     private ArrayList playerList;
     private ArrayList starList;
     private static Image bgImage;
-    protected int boardSize;
+    protected static final int BOARD_SIZE = 100;
     protected static final int MAX_PLAYERS = 4;
     protected int currPlayers;
     protected int playerTurnNum;
-    protected static Dice _dice;
+   /* CSCI331 DS STATICBINDING
+    * The _dice instance is bound statically to type Dice.
+    * It will always call methods from the Dice class.
+    * Because the variable is declared using the static keyword 
+    * as well, only one instance of Dice object will ever be instantiated 
+    * over all Board objects created. Therefore globally there will be one 
+    * Dice object and the methods which are called will always be from that 
+    * single Dice object instance.
+    */
+    protected static Dice _dice = new Dice();
     protected ScoreBoard _scoreBoard;
     protected Winner _winGFX;
     protected boolean winner = false;
@@ -37,21 +61,21 @@ public class Board {
    
     public Board(){
         //constructor
-        boardSize = 100;
         currPlayers = 0;
         playerTurnNum = 0;
-        boardArray = new BoardNode[boardSize];
-        for (int i = 0; i < boardSize; i++){
+        boardArray = new BoardNode[BOARD_SIZE];
+        for (int i = 0; i < BOARD_SIZE; i++){
             boardArray[i] = new BoardNode(i);
         }
         snakeList = new ArrayList();
         ladderList = new ArrayList();
         playerList = new ArrayList();
         starList = new ArrayList();
-        _dice = new Dice();
         _scoreBoard = new ScoreBoard();
         try {
-    	  bgImage = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/resources/imgs/background.png"));
+    	  bgImage = Toolkit.getDefaultToolkit().getImage(
+                  getClass().getResource("/resources/imgs/background.png")
+                                                         );
         }
         catch (Exception e) {
      	  System.out.printf(e.toString() + "\n");
@@ -67,7 +91,54 @@ public class Board {
     }
     
     public void AIMove(){
-        //TODO impelent meee
+    	if (this._winGFX != null)
+    		return;
+    	int numAI = this.currPlayers - 1;
+		try {
+            Thread.sleep(1500);
+        } catch (Exception e){
+        	//do nothing
+		}
+    	for (int i = 0; i < numAI; i++){
+    		this.diceRoll();
+    		//wait for 1500
+    		try {
+                Thread.sleep(1500);
+            } catch (Exception e){
+            	//do nothing
+    		}
+        	if (educationalMode){
+        		if (Math.random() > .75 ){
+        			//25% chance to fail the question
+        			Player _currPlayer = (Player)this.getPlayerList().get(playerTurnNum);
+        			JOptionPane.showMessageDialog(null, "Player " + _currPlayer.getPlayerName() + " failed to answer question correctly!");
+        	        playerTurnNum = ++playerTurnNum % currPlayers;
+        	        _scoreBoard.updateCurrTurn(playerTurnNum);
+        			continue;
+        		} else {
+        			this.educationalMode = false;
+        			this.movePlayer();
+        			this.educationalMode = true;
+        		}
+        	} else {
+        		this.movePlayer();
+        	}
+        	if (i == numAI){
+        		try {
+                    Thread.sleep(500);
+                } catch (Exception e){
+                	//do nothing
+        		}
+        	} else {
+        		try {
+                    Thread.sleep(2000);
+                } catch (Exception e){
+                	//do nothing
+        		}
+        	}
+    		
+    	}
+    	
     }
     
     public boolean addPlayer(Player _player){
@@ -95,7 +166,7 @@ public class Board {
     public void drawBG(Graphics g, SnakesAndLadders parent){
         g.drawImage(bgImage, 0, 0, parent);
     }
-
+    
     public boolean addSnake(){
         Snake _snakeInstance = new Snake();
         //check for duplicate
@@ -181,7 +252,7 @@ public class Board {
         //draw dice
         _dice.paintComponent(g, parent);
         
-        if (winner){
+        if (_winGFX != null){
             _winGFX.draw(g, parent);
         }
             
@@ -206,6 +277,17 @@ public class Board {
         int endPos = firstPos + numMoves;
         
         if (educationalMode && endPos <= 100){
+            /* CSCI331 DS DYNAMICBINDING
+             * Here is an example of Dynamic binding.
+             * We create a variable of general type Question which is
+             * dynamically bound to a random type of educational mode question.
+             * The system will randomly choose to assign the variable to a
+             * new instance of specific question type and then it exercises 
+             * the code the same way no matter what type of question has been
+             * chosen. This forces each question follow a common interface.
+             * The methods/variables accessed will be of the dynamic type
+             * that has been instantiated for this question period.
+             */
             Question _question;
             if ((Math.random() * 2) >= 1){
                 _question = new CountingQuestion(firstPos, numMoves);
@@ -253,6 +335,17 @@ public class Board {
         return true; 
     }
     
+    //CSCI331 COLLISION
+    /* Here is the point in the code where we do collision detection.
+     * We aren't using objects that have dimensions on the screen like they
+     * had in the lab with Rectangle objects and the like. Instead we detect 
+     * collision in our state model using a less complicated method by checking 
+     * to see if a snake or star or ladder is on the square we have moved to.
+     * If a collision is detected, another movement is added to the movement 
+     * queue of whichever player's turn it is and the check is done again 
+     * recursively in case another collision occurs on the new location that 
+     * the player moves to.
+     */
     public boolean movePlayerModifiers(Player _currPlayer, int square){
         //detect infinite cycle movement bug
         if (_currPlayer.getMovePathSize() >= 15) return true;
@@ -260,7 +353,6 @@ public class Board {
         if (square >= 100){ 
                 _currPlayer.setBoardPos(100);
                  this._winGFX = new Winner(_currPlayer.getPlayerName());
-                 this.winner = true;
                 return false; //end of game
         }
 
@@ -305,11 +397,6 @@ public class Board {
         }
         
         return true;
-    }
-
-
-    private static int rollDice(){
-        return 1 + (int)(Math.random()*6); 
     }
     
     private static int getMovement(){

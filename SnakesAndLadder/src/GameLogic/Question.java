@@ -8,7 +8,7 @@ package GameLogic;
  *
  * @author Dylan
  */
-public interface Question {
+public interface Question {  
     public boolean isFinished();
     public boolean isCorrect();
 }

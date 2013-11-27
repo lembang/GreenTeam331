@@ -9,8 +9,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import SnakesAndLaddersApplet.SnakesAndLadders;
 
-/**
- *
+/** CSCI331 RH ENCAPSULATION
+ *  This class has getters and setters for 
+ *  the currPlayers variable.
  *
  */
 public class ScoreBoard {
@@ -22,6 +23,7 @@ public class ScoreBoard {
     private int startY;
     private int width;
     private int height;
+    int plNum;
     private final static int MAX_PLAYERS = 4;
     
     public void addStar(int playerNum){
@@ -51,26 +53,47 @@ public class ScoreBoard {
         startX = 610;
         startY = 10;
         width = 265;
-        height = 240;
+        height = 350;
     }
     public void draw(Graphics g, SnakesAndLadders parent) {
-        //g.drawImage(thisIMG,xPos,yPos, parent);
-        //draw stuff here, fix it all
-        Color BG = new Color(200,200,200);
+         g.setColor(Color.BLACK);
+         g.fillRect(  startX-3,   startY-3,  width+6,    height+6);
+        Color BG = new Color(180,180,180);
         g.setColor(BG);
         g.fillRect(startX,startY,width,height);
         g.setColor(Color.BLACK);
         int lastY = 0;
-        Font font = new Font("Arial", Font.PLAIN, 20);
-        g.setFont(font);
-        for (int i = 0; i < this.currPlayers; i++){
-            g.drawString(playerNames[i], startX + 20 , startY + 30 + (i*40));
-            lastY = startY + 20 + (i*40);
+       Font f = new Font("Serif",Font.BOLD,25);
+        
+        g.setFont(f);
+       
+        
+        for (int i=0 ; i < this.getCurrPlayers(); i++){
+           
+            g.drawString(playerNames[i], startX + 20 , startY + 20 + (i*50));
+            lastY = startY + 20 + (i*50);
         }
-        lastY += 40;
+        
+        lastY += 60;
         g.drawString("Current Turn:", startX + 20 , lastY);
-        lastY += 40;
+        lastY += 60;
+                
         g.drawString("Player: " + playerNames[currTurn], startX + 20 , lastY);
+    }
+    
+    /**
+     * @return the currPlayers
+     */
+    public int getCurrPlayers() {
+        return this.currPlayers;
+    }
+
+    /**
+     * @param currPlayers the currPlayers to set
+     */
+    public void setCurrPlayers(int currPlayers) {
+        if (currPlayers>=0 && currPlayers<=MAX_PLAYERS)   
+               this.currPlayers = currPlayers;
     }
 }
 

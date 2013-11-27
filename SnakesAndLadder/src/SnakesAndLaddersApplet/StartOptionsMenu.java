@@ -6,8 +6,6 @@ package SnakesAndLaddersApplet;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 
@@ -15,6 +13,19 @@ import javax.swing.JOptionPane;
  *
  * @author Dylan
  */
+
+/* CSCI331 DS INTERFACE
+ * Here is an example of a class that provides an interface that my teammates 
+ * could easily use without knowing the details of its implementation. This 
+ * class acts as a way for a user to supply input that could modify the 
+ * gameplay experience of the game. The code has get-methods and is-methods 
+ * that can allow my teammates to access the input the user provides without
+ * knowing how the class implements actually getting the input from the user.
+ * 
+ * (This class was created in the netbeans form design tool and includes IDE
+ * generated code)
+ */
+
 public class StartOptionsMenu extends javax.swing.JFrame {
     private ButtonGroup group;
     
@@ -24,33 +35,33 @@ public class StartOptionsMenu extends javax.swing.JFrame {
     private int gameMode;
     
     private boolean educationalMode = false;
-    private int snakes = 10;
-    private int ladders = 10;
-    private int stars = 0;
     private boolean finished = false;
+    private int snakes;
+    private int ladders;
+    private int stars;
 
     public int getGameMode() {
         return gameMode;
     }
 
     public boolean isEducationalMode() {
-        return educationalMode;
+        return this.educationalMode;
     }
 
     public int getSnakes() {
-        return snakes;
+        return this.snakes;
     }
 
     public int getLadders() {
-        return ladders;
+        return this.ladders;
     }
 
     public int getStars() {
-        return stars;
+        return this.stars;
     }
 
     public boolean isFinished() {
-        return finished;
+        return this.finished;
     }
     /**
      * Creates new form NewJFrame
