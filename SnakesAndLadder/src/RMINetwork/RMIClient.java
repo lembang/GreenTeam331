@@ -1,4 +1,4 @@
-/*
+/* @author the
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -40,6 +40,8 @@ public class RMIClient {
         System.out.println("Client Connected");
     }
 
+    
+    
     /**
      * @return the setRMIAddress
      */
@@ -59,10 +61,8 @@ public class RMIClient {
         playnumb = riface.getPlayerNumber();
         return playnumb;
     }
-    /**
-     * 
-     * @param strRMIAddress
-     */
+ 
+    
     public void setStrRMIAddress(String strRMIAddress) {
         this.strRMIAddress = strRMIAddress;
     }
