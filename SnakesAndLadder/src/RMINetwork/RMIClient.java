@@ -21,6 +21,7 @@ public class RMIClient {
     /**
      * Variables to be used as a global variable
      */
+    private int playnumb;
     private String strRMIAddress, strIPAddress;
     private final String strServiceName = "/SnakeService";
     private RemoteInterface riface;
@@ -45,7 +46,19 @@ public class RMIClient {
     public String getStrRMIAddress() {
         return strRMIAddress;
     }
-
+    
+    public void connect(String username){
+    try {
+        riface.connect(username);
+        } 
+    catch (RemoteException ex) {
+        JOptionPane.showMessageDialog(null,"Username Error :" + ex);
+        }
+    }
+    public int getNumber()throws RemoteException{
+        playnumb = riface.getPlayerNumber();
+        return playnumb;
+    }
     /**
      * 
      * @param strRMIAddress
@@ -67,6 +80,8 @@ public class RMIClient {
     public void setStrIPAddress(String strIPAddress) {
         this.strIPAddress = strIPAddress;
     }
+    
+    
     
 }
 
