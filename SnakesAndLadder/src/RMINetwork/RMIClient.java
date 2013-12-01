@@ -38,17 +38,13 @@ public class RMIClient {
             System.exit(0);
         }
         System.out.println("Client Connected");
-    }
-
-    
-    
+    } 
     /**
      * @return the setRMIAddress
      */
     public String getStrRMIAddress() {
         return strRMIAddress;
-    }
-    
+    }    
     public void connect(String username){
     try {
         riface.connect(username);
@@ -61,27 +57,20 @@ public class RMIClient {
         playnumb = riface.getPlayerNumber();
         return playnumb;
     }
- 
-    
     public void setStrRMIAddress(String strRMIAddress) {
         this.strRMIAddress = strRMIAddress;
     }
-
     /**
      * @return the strIPAddress
      */
     public String getStrIPAddress() {
         return strIPAddress;
     }
-
     /**
      * @param strIPAddress the strIPAddress to set
      */
     public void setStrIPAddress(String strIPAddress) {
         this.strIPAddress = strIPAddress;
     }
-    
-    
-    
 }
 
