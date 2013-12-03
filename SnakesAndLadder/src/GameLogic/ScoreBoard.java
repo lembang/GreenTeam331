@@ -14,6 +14,18 @@ import SnakesAndLaddersApplet.SnakesAndLadders;
  *  the currPlayers variable.
  *
  */
+
+/** CSCI331 RH INTERFACE
+ *  a class that provides an interface so that my 
+ *  teammates 
+ *
+ *  could easily  use details without knowing the 
+ *  implementation of class.
+ *
+ *  This class let them know with player turn is next 
+ *  and number of stars a player has.
+ */
+
 public class ScoreBoard {
     private int currPlayers;
     private String playerNames[];
