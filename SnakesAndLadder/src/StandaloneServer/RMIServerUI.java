@@ -1,13 +1,17 @@
-/*
+/* @author the
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+ * Modified code from Angga's code (Old friend of mine)
+ * Documention on
+ * https://github.com/lembang/GreenTeam331/wiki/_pages
  */
 
 package StandaloneServer;
 
 import RMINetwork.RemoteImplementation;
 import RMINetwork.RemoteInterface;
+import GameLogic.BoardMulti;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -32,10 +36,14 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
     /**
      * Creates new form RMIServerUI
      */
+
     /**
      * Variables Here
      */
     Registry reg;
+    private int intZZ =0 ;
+    private BoardMulti bmulti = new BoardMulti();
+    private ArrayList gLadder, gStar, gSnake;
     private static HashMap<String, Socket> connectedUser = new HashMap<String, Socket>();	
     private static Socket ClientSocket = null;
     private static ServerSocket serverSocket;
@@ -48,6 +56,11 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
     private static final String OFFLINE = "OFFLINE";
     public RMIServerUI() {
         initComponents();
+        //Set Initialize Ladder Snake and Star
+        gLadder = bmulti.getInitLadderList();
+        gStar = bmulti.getInitStarList();
+        gSnake = bmulti.getInitSnakeList();
+        
     }
     
     /**
@@ -138,7 +151,10 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
             }
         });
     }
-    
+    /*
+    CSCI331 COMMUNICATION
+    Using LAB 4 Networking method RMI
+    */
     public void initializeConnection(String ipAddress, int port){
         try{
             ipAddress = "rmi://"+ipAddress+"/SnakeLadder:"+port;
@@ -159,6 +175,15 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
             JOptionPane.showMessageDialog(null,"Shutdown Service fail :" + ex);
         }
         
+    }
+    
+    public int getPlayerNumber() throws RemoteException{
+        if (intZZ == 5){
+            intZZ = 0;
+        }else {
+            intZZ++;
+        }
+        return intZZ;
     }
     
     private void processConnection(int port){
@@ -234,10 +259,33 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
 
     public void disconnect(String username) throws RemoteException
     {
-            connectedUser.remove(username);
-            sendPublicMessage(OFFLINE, username, username + " has been left the conversation");
-            sendPublicMessage(PUBLICMESSAGE, "SERVER", username + " has been left the conversation");
-	}
+        connectedUser.remove(username);
+        sendPublicMessage(OFFLINE, username, username + " has been left ");
+
+    }
+    /*
+    HST DYNAMIC BINDING
+    This the generated SNAKE, LADDER, and STAR.
+    These three are a DYNAMIC Binding, because the SNAKE, the STAR, and Tthe LADDER will be 
+    generated for the client everytime the server started.
+    */
+    
+    public ArrayList generatedSnake()throws RemoteException{
+        return gSnake;
+    }
+    
+    public ArrayList generatedLadder()throws RemoteException{
+        return gLadder;
+    }
+    
+    public ArrayList generatedStar()throws RemoteException{
+        return gStar;
+    }
+    
+    public void movementState(int pNum, int posx1, int posx2){
+    
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnStart;
@@ -257,5 +305,47 @@ public class RMIServerUI extends javax.swing.JFrame implements Runnable  {
     @Override
     public void run() {
         
+    }
+
+    /**
+     * @return the gLadder
+     */
+    public ArrayList getgLadder() {
+        return gLadder;
+    }
+
+    /**
+     * @param gLadder the gLadder to set
+     */
+    public void setgLadder(ArrayList gLadder) {
+        this.gLadder = gLadder;
+    }
+
+    /**
+     * @return the gStar
+     */
+    public ArrayList getgStar() {
+        return gStar;
+    }
+
+    /**
+     * @param gStar the gStar to set
+     */
+    public void setgStar(ArrayList gStar) {
+        this.gStar = gStar;
+    }
+
+    /**
+     * @return the gSnake
+     */
+    public ArrayList getgSnake() {
+        return gSnake;
+    }
+
+    /**
+     * @param gSnake the gSnake to set
+     */
+    public void setgSnake(ArrayList gSnake) {
+        this.gSnake = gSnake;
     }
 }

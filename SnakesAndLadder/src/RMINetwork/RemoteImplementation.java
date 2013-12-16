@@ -18,6 +18,10 @@ import java.util.ArrayList;
 public class RemoteImplementation extends UnicastRemoteObject implements RemoteInterface {
     private final RMIServerUI rServer = new RMIServerUI();
     public RemoteImplementation()throws RemoteException{}
+    /*
+    HST OVERRIDING
+    This is all the stub required by the RMI system, and done through overriding.
+    */
     @Override
     public void connect(String username) throws RemoteException
     {

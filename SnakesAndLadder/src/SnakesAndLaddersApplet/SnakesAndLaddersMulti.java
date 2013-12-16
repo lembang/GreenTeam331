@@ -12,6 +12,9 @@ import GameLogic.BoardMulti;
 import GameLogic.Player;
 import RMINetwork.*;
 import java.awt.Color;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class SnakesAndLaddersMulti extends SnakesAndLadders {
@@ -82,6 +85,11 @@ public class SnakesAndLaddersMulti extends SnakesAndLadders {
     public void intrntMulti(){
         rClient = new RMIClient();
         rClient.createConnection(3103);
+       try {
+           rClient.connect(String.valueOf(rClient.getNumber()));
+       } catch (RemoteException ex) {
+           Logger.getLogger(SnakesAndLaddersMulti.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }
     /**
      * 

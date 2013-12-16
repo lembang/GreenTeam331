@@ -13,6 +13,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
@@ -25,8 +26,20 @@ public class RMIClient {
      * Variables to be used as a global variable
      */
     private int playnumb;
+    /*
+    HST ENCAPSULATION
+    RMIAddress and IPAddress are protected, as a local variables
+    the IP Address and the RMIAddress will be changed by the the get & set function.
+    Why?
+    It's because RMIAddress and Server IPAddress, has a specific pattern, is better to parse the value through the get set method to be able to check it first, before it's being used.
+    */
     private String strRMIAddress, strIPAddress;
-    private final String strServiceName = "/SnakeService";
+    /*
+    HST STATICBINDING
+    ServiceName variable are meant to be the same all the time, and unchangeable.
+    When the server run, it will only have one specific RMI service name, to make sure the client will connected to the right RMI Server.
+    */
+    protected static String strServiceName = "/SnakeService";
     private RemoteInterface riface;
     public RMIClient(){} //empty constructor
     
@@ -74,6 +87,18 @@ public class RMIClient {
      */
     public void setStrIPAddress(String strIPAddress) {
         this.strIPAddress = strIPAddress;
+    }
+    
+    public ArrayList GLadder() throws RemoteException{
+        return riface.generatedLadder();
+    }
+    
+    public ArrayList GSnake() throws RemoteException{
+        return riface.generatedSnake();
+    }
+    
+    public ArrayList GStar() throws RemoteException{
+        return riface.generatedStar();
     }
 }
 
