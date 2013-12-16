@@ -3,16 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/RMINetwork/RemoteImplementation.java</file>
-            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/Player.java</file>
-            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/test/Test%20Packages/GameLogic/StarTest.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/Question.java</file>
             <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/SnakesAndLaddersApplet/SnakesAndLadders.java</file>
-            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/StandaloneServer/RMIServerUI.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/test/Test%20Packages/GameLogic/StarTest.java</file>
             <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/SnakesAndLaddersApplet/SnakesAndLaddersMulti.java</file>
             <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/GamePiece.java</file>
-            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/test/RMINetwork/RMIClientTest.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/Star.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/Winner.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/Snake.java</file>
             <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/RMINetwork/RMIClient.java</file>
             <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/RMINetwork/RemoteInterface.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/Dice.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/CountingQuestion.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/RMINetwork/RemoteImplementation.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/Player.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/StandaloneServer/RMIServerUI.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/ScoreBoard.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/AddingQuestion.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/test/RMINetwork/RMIClientTest.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/Board.java</file>
+            <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/BoardNode.java</file>
             <file>file:/D:/Documents/MyDoc/NetBeansProject/GreenTeam331/SnakesAndLadder/src/GameLogic/BoardMulti.java</file>
         </group>
     </open-files>
